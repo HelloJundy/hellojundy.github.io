@@ -1,0 +1,13 @@
+# Site settings
+title: Jayce
+motto: 但行好事，莫问前程
+email: Jayce@Beansmile.com
+description: > # this means to ignore newlines until "baseurl:"
+  Hello,i'm jayce
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://yourdomain.com" # the base hostname & protocol for your site
+twitter_username:
+github_username: hellojundy
+
+# Build settings
+markdown: kramdown
