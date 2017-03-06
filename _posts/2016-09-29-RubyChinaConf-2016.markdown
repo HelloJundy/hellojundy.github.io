@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "参加RubyConf China 2016 收获"
-categories: jekyll update
+categories: 旅行 学习
 ---
 ### 一次不一样的旅程
 2016年9月22日早上10点，我们怀着激动的心情登上了飞往成都的飞机，也像是踏上了取经之路一般怀着虔诚的心。
