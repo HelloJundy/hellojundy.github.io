@@ -34,6 +34,17 @@
 					<a href="/category.html">category</a>
 				</li>			
 			{% endif %}
+			{% if page.path == "book.html" %}
+			<span class="title">
+				<li>
+					<a href="/book.html">book</a>
+				</li>
+			</span>			
+			{% else %}
+				<li>
+					<a href="/book.html">book</a>
+				</li>			
+			{% endif %}
 			{% if page.path == "about.html" %}
 			<span class="title">
 				<li>

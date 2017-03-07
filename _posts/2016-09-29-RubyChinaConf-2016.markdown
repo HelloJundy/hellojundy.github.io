@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "参加RubyConf China 2016 收获"
+author: jayce
 categories: 旅行 学习
 ---
 ### 一次不一样的旅程
