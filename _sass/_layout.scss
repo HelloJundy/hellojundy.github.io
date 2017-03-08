@@ -125,11 +125,36 @@ li {
     margin-top: 20px;
     color: #666;
     font-size: 14px;
+    white-space: pre-line;
 }
 .author {
     margin-left: 20px;
     font-size: 13px;
     color: gray;
+}
+
+.state-bar {
+    float: right;
+
+    a:link {
+        opacity: 1;
+        transition: all 0.15s linear 0s;
+        text-decoration: none;
+        color: #555566;
+     }
+
+    a:hover {
+        opacity: 0.5;
+    }
+
+    a:active {
+        opacity: 0.2;
+        color: red;
+    }
+
+    lable{
+        padding-right: 15px;
+    }
 }
 
 .post-list {
