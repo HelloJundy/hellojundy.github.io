@@ -21,7 +21,6 @@ obj_arr = [1, 2, 3]
 
 [*obj]     # => [1]
 [*obj_arr] # => [1, 2, 3]
-
 ```
 
 使用Array()也可以得到一样的效果
@@ -41,4 +40,29 @@ obj_arr = [1, 2, 3]
     [4, 5, 6]
     [7, 8, 9]
     [10]
+```
+
+#### 5. truncate()
+Truncates a given text after a given length if text is longer than length:
+
+```
+"hello world".truncate(8)
+=> "hello..."
+
+"hello world, hello ruby".truncate(17,  omission: '... (continued)')
+=> "he... (continued)"
+
+# truncate_word()
+"hello world, hello ruby".truncate_words(2)
+=> "hello world,..."
+```
+
+#### 6. The reverse of camelize
+
+```
+'ActiveModel'.underscore
+=> "active_model"
+
+'ActiveModel::Errors'.underscore
+=> "active_model/errors"
 ```
