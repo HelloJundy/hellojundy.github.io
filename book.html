@@ -3,101 +3,63 @@ layout: default
 ---
 <div class="home">
   <div class = "state-bar">
-    <a href = "javascript:void(0)" class = "read">
-      <lable>
-      </lable>
-    </a>
-    <span style="margin-right: 3px;">/
-    </span>
-    <a href = "javascript:void(0)" class = "wish">
-      <lable>
-      </lable>
-    </a>
-    <span style="margin-right: 3px;">/
-    </span>
-    <a href = "javascript:void(0)" class = "reading">
-      <lable>
-      </lable>
-    </a>
+    <a href = "javascript:void(0)" class = "read"></a>
+    <span style="margin-right: 3px;">/</span>
+    <a href = "javascript:void(0)" class = "wish"></a>
+    <span style="margin-right: 3px;">/</span>
+    <a href = "javascript:void(0)" class = "reading"></a>
   </div>
-  <ul class="post-list read-list">
-  </ul>
-  <ul class="post-list wish-list" style="display: none">
-  </ul>
-  <ul class="post-list reading-list" style="display: none">
-  </ul>
+  <ul class="post-list read-list"></ul>
+  <ul class="post-list wish-list" style="display: none"></ul>
+  <ul class="post-list reading-list" style="display: none"></ul>
 </div>
 
 <script type="text/javascript">
   $(document).ready(function(){
-    var read_html = '';
-    var wish_html = '';
-    var reading_html = '';
     $.ajax({
-       type : "get", //jquey是不支持post方式跨域的
-       async: false,
-       url : "https://api.douban.com/v2/book/user/119280372/collections", //跨域请求的URL
-       dataType : "jsonp",
-       //传递给请求处理程序，用以获得jsonp回调函数名的参数名(默认为:callback)
-       jsonp: "callback",
-       //自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
-       jsonpCallback:"success_jsonpCallback",
-       //成功获取跨域服务器上的json数据后,会动态执行这个callback函数
-       success : function(json){
-         var collections = json.collections;
-         var read_count = 0;
-         var wish_count = 0;
-         var reading_count = 0;
-         for(var key in collections){
-            data = collections[key];
-            book = data.book;
-            if(data.status == "read"){
-              read_count++;
-              read_html += li_html(book);
-            }else if(data.status == "wish"){
-              wish_html += li_html(book);
-              wish_count++;
-            } else if(data.status == "reading"){
-              reading_html += li_html(book);
-              reading_count++;
-            }
-         };
-         $(".read-list").html(read_html);
-         $(".wish-list").html(wish_html);
-         $(".reading-list").html(reading_html);
-         $(".read").text("已读（"+ read_count +"）");
-         $(".wish").text("想读（"+ wish_count +"）");
-         $(".reading").text("在读（"+ reading_count +"）");
+      type : "get", //jquey是不支持post方式跨域的
+      async: false,
+      url : "https://api.douban.com/v2/book/user/119280372/collections?count=100", //跨域请求的URL
+      dataType : "jsonp",
+      //传递给请求处理程序，用以获得jsonp回调函数名的参数名(默认为:callback)
+      jsonp: "callback",
+      //自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
+      jsonpCallback:"success_jsonpCallback",
+      //成功获取跨域服务器上的json数据后,会动态执行这个callback函数
+      success : function(json){
+        var collections = json.collections;
+        var count = {"read": 0, "wish": 0, "reading": 0};
+        for(var key in collections){
+          data = collections[key];
+          count[data.status]++;
+          $("."+ data.status +"-list").append(bookItem(data));
+        };
+        $(".read").text("已读（"+ count["read"] +"）");
+        $(".wish").text("想读（"+ count["wish"] +"）");
+        $(".reading").text("在读（"+ count["reading"] +"）");
       }
     });
 
-    $(".read").click(function(){
-       $(".read-list").fadeIn();
-       $(".wish-list").fadeOut();
-       $(".reading-list").fadeOut();
-    });
-    $(".wish").click(function(){
-       $(".read-list").fadeOut();
-       $(".wish-list").fadeIn();
-       $(".reading-list").fadeOut();
-    });
-    $(".reading").click(function(){
-       $(".read-list").fadeOut();
-       $(".wish-list").fadeOut();
-       $(".reading-list").fadeIn();
+    ["read", "reading", "wish"].map(function(status){
+      $("." + status).click(function(){
+        list = status + "-list";
+        $("." + list).fadeIn();
+        $("ul:not(." + list +")").fadeOut();
+      });
     });
   });
 
-  function li_html(book){
-      var html = '';
-      html += "<li><br><h3>";
-      html += "<a class='post-link' href='"+ book.alt +"'>"+ book.title +"</a>";
-      html += "<span class='author'>"+ book.author +"</span></h3>";
-      html += "<img src= "+ book.image +">";
-      if(data.comment != undefined){
-        html += "<div class='comment'>"+ data.comment +"</div>";
-      }
-      html += "<br><span class='post-meta'>"+ data.updated +"</span><hr id='line'></li>";
-      return html;
+  function bookItem(data){
+    var book = data.book
+    var html = '';
+    html += "<li><br><h3>";
+    html += "<a class='post-link' href='"+ book.alt +"'>"+ book.title +"</a>";
+    html += "<span class='author'>"+ book.author +"</span></h3>";
+    html += "<img src= "+ book.image +">";
+    if(data.comment != undefined){
+      html += "<div class='comment'>"+ data.comment +"</div>";
+    }
+    html += "<br><span class='post-meta'>"+ data.updated +"</span><hr id='line'></li>";
+    return html;
   };
 </script>
